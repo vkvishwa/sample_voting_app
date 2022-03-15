@@ -36,7 +36,7 @@ env:
   CONTAINER_NAME: "azure-voting-app"
   RESOURCE_GROUP: "kingoliver-actions-demo"
   CLUSTER_NAME: "kingoliver-actions-demo-cluster"
-  IMAGE_PULL_SECRET_NAME: "acr-pull-secret"
+  IMAGE_PULL_SECRET_NAME: "acrpullsecret"
 
 jobs:
   build:
