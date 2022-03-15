@@ -1,14 +1,14 @@
 FROM    tiangolo/uwsgi-nginx-flask:python3.6
 
-COPY sshd_config /etc/ssh/
-COPY app_init.supervisord.conf /etc/supervisor/conf.d
-
 RUN  mkdir -p /home/LogFiles \
      && echo "root:Docker!" | chpasswd \
      && echo "cd /home" >> /etc/bash.bashrc \
-     && apt update \
-     && apt install -y --no-install-recommends openssh-server vim curl wget tcptraceroute
+     && apt update
 
+COPY sshd_config /etc/ssh/
+COPY app_init.supervisord.conf /etc/supervisor/conf.d
+
+RUN  apt install -y --no-install-recommends openssh-server vim curl wget tcptraceroute
 RUN  pip install redis
 
 EXPOSE 2222 80
