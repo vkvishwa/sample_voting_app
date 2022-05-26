@@ -37,7 +37,7 @@ env:
   AZURE_CONTAINER_REGISTRY: "kingoliverregistry"
   CONTAINER_NAME: "your-container-name"
   RESOURCE_GROUP: "kingoliver"
-  CLUSTER_NAME: "/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourcegroups/kingoliver/providers/Microsoft.ContainerService/managedClusters/kingoliver"
+  CLUSTER_NAME: "kingoliver"
   DEPLOYMENT_MANIFEST_PATH: "/manifests/azure-vote-backend-deployment.yaml
 /manifests/azure-vote-backend-service.yaml
 /manifests/azure-vote-frontend-deployment.yaml
