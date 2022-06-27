@@ -1,0 +1,17 @@
+name: Install Helm
+
+jobs:
+  integration-tests:
+    strategy:
+      fail-fast: true
+      matrix:
+        python: ["3.7", "3.8", "3.9", "3.10"]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v3
+      - uses: azure/setup-helm@217bf70cbd2e930ba2e81ba7e1de2f7faecc42ba  # v2
