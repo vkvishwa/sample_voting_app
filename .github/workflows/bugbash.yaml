@@ -12,8 +12,6 @@ env:
     CONTAINER_NAME: bugbashimage
     DEPLOYMENT_MANIFEST_PATH: |
         ./manifests/azure-vote-backend-deployment.yaml
-        ./manifests/service.yml
-        ./manifests/deployment.yml
         ./manifests/azure-vote-frontend-service.yaml
         ./manifests/azure-vote-frontend-deployment.yaml
         ./manifests/azure-vote-backend-service.yaml
