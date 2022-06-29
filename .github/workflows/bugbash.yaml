@@ -32,7 +32,7 @@ jobs:
                 tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             - name: Build and push image to ACR
               run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./azure-vote/Dockerfile ./
-    createSecret:
+    attachAcr:
         permissions:
             contents: read
             id-token: write
@@ -49,23 +49,9 @@ jobs:
               with:
                 cluster-name: ${{ env.CLUSTER_NAME }}
                 resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
-            - name: Get ACR credentials
-              run: |
-                az acr update -n ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} --admin-enabled true
-                ACR_USERNAME=$(az acr credential show -g ${{ env.ACR_RESOURCE_GROUP }} -n ${{ env.AZURE_CONTAINER_REGISTRY }} --query username -o tsv)
-                ACR_PASSWORD=$(az acr credential show -g ${{ env.ACR_RESOURCE_GROUP }} -n ${{ env.AZURE_CONTAINER_REGISTRY }} --query passwords[0].value -o tsv)
-                echo "::add-mask::${ACR_USERNAME}"
-                echo "::set-output name=username::${ACR_USERNAME}"
-                echo "::add-mask::${ACR_PASSWORD}"
-                echo "::set-output name=password::${ACR_PASSWORD}"
-              id: get-acr-creds
-            - uses: Azure/k8s-create-secret@v1.1
-              name: Create K8s secret for pulling image from ACR
-              with:
-                container-registry-password: ${{ steps.get-acr-creds.outputs.password }}
-                container-registry-url: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-                container-registry-username: ${{ steps.get-acr-creds.outputs.username }}
-                secret-name: ${{ env.IMAGE_PULL_SECRET_NAME }}
+            - name: Create K8s secret for pulling image from ACR
+              run:  az aks update -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} --attach-acr ${{ env.AZURE_CONTAINER_REGISTRY }}
+
     deploy:
         permissions:
             actions: read
