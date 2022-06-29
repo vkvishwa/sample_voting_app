@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: azure-vote-front
-          image: kingoliverDemoAcr.azurecr.io/azure-voting-app
+          image: bugbashregistry.azurecr.io/bugbashimage
           ports:
             - containerPort: 80
           env:
