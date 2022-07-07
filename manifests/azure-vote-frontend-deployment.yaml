@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: azure-vote-front
-          image: bugbashregistry.azurecr.io/bugbasher
+          image: devhubtestregistry.azurecr.io/newimage
           ports:
             - containerPort: 80
           env:
