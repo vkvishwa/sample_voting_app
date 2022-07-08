@@ -85,6 +85,7 @@ jobs:
       contents: read
       id-token: write
     runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
     needs: [shouldPromote]
     steps:
       # Checks out the repository this file is in
@@ -117,7 +118,6 @@ jobs:
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
 
   reject:
-    environment: reject
     permissions:
       actions: read
       contents: read
