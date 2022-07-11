@@ -2,11 +2,11 @@ name: testingfordevhub
 on:
     workflow_dispatch: {}
 env:
-    ACR_RESOURCE_GROUP: devhubtest
-    AZURE_CONTAINER_REGISTRY: devhubtestregistry
-    CLUSTER_NAME: devhubtest
-    CLUSTER_RESOURCE_GROUP: devhubtest
-    CONTAINER_NAME: newimage
+    ACR_RESOURCE_GROUP: kingoliverregistry
+    AZURE_CONTAINER_REGISTRY: kingoliverregistry
+    CLUSTER_NAME: kingoliver
+    CLUSTER_RESOURCE_GROUP: kingoliver
+    CONTAINER_NAME: image
     DEPLOYMENT_MANIFEST_PATH: |
         ./manifests/azure-vote-backend-service.yaml
         ./manifests/azure-vote-backend-deployment.yaml
