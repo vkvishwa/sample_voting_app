@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: azure-vote-front
-          image: devhubtestregistry.azurecr.io/newimage
+          image: kingoliverregistry.azurecr.io/image
           ports:
             - containerPort: 80
           env:
