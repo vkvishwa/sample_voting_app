@@ -85,7 +85,7 @@ jobs:
       contents: read
       id-token: write
     runs-on: ubuntu-latest
-    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    if: ${{ contains(join(needs.*.result, ','), 'success') }}
     needs: [shouldPromote]
     steps:
       # Checks out the repository this file is in
@@ -124,7 +124,7 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     needs: [shouldPromote]
-    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
+    if: ${{ contains(join(needs.*.result, ','), 'failure') }}
     steps:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
