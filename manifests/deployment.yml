@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "deploymentcenter-e4b7"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "deploymentcenter-e4b7"
+  template:
+    metadata:
+      labels:
+        app: "deploymentcenter-e4b7"
+    spec:
+      containers:
+        - name: "deploymentcenter-e4b7"
+          image: "testingfordevhub.azurecr.io/deploymentcenter"
+          ports:
+          - containerPort: 80
