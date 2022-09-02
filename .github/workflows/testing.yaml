@@ -7,9 +7,9 @@ name: testing
 env:
     ACR_RESOURCE_GROUP: kingoliverregistry
     AZURE_CONTAINER_REGISTRY: kingoliverregistry
-    CLUSTER_NAME: kingoliver
-    CLUSTER_RESOURCE_GROUP: kingoliver
-    CONTAINER_NAME: test
+    CLUSTER_NAME: kingoliver2
+    CLUSTER_RESOURCE_GROUP: kingoliver2
+    CONTAINER_NAME: kingoliver2
     DEPLOYMENT_MANIFEST_PATH: |
         ./manifests/azure-vote-backend-deployment.yaml
         ./manifests/azure-vote-frontend-service.yaml
@@ -58,4 +58,4 @@ jobs:
                 action: deploy
                 images: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
                 manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-                namespace: namespace-workflow-1660588329752
+                namespace: namespace-workflow-1662134889818
