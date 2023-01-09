@@ -1,4 +1,4 @@
-name: setup helm test
+name: setup kubectl test
 on:
     workflow_dispatch: {}
 
@@ -6,7 +6,6 @@ jobs:
   buildImage:
     runs-on: ubuntu-latest
     steps:
-      - uses: azure/setup-helm@v3.2
+      - uses: azure/setup-kubectl@v3.2
         with:
           version: latest
-          token: ${{ secrets.GITHUB_TOKEN }}
