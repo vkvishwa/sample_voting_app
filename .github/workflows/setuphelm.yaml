@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: azure/setup-kubectl@v3
         with:
-          version: 1.25.5
+          version: v1.25.5
       - run: kubectl version
