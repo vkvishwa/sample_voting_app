@@ -13,8 +13,6 @@ env:
     DEPLOYMENT_MANIFEST_PATH: |
         ./manifests/azure-vote-backend-deployment.yaml
         ./manifests/azure-vote-backend-service.yaml
-        ./manifests/azure-vote-frontend-deployment.yaml
-        ./manifests/azure-vote-frontend-service.yaml
 jobs:
     buildImage:
         permissions:
