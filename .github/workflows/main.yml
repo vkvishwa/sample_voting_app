@@ -23,8 +23,8 @@ jobs:
     - uses: azure/docker-login@v1
       with:
         login-server: votingappacrr.azurecr.io
-        username: ${{ steps.create-acr.outputs.acr_username }}
-        password: ${{ steps.create-acr.outputs.acr_password }}
+        username: votingappacrr
+        password: pV3BYa+ys9xhS9q2XtoBd4ZG/Bo02QzU9lRuaPDGFC+ACRBtqkQJ
 
     - name: Build and push image to ACR
       id: build-image
