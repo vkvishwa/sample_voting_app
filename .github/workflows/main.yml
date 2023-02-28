@@ -36,7 +36,7 @@ jobs:
       run: docker images
       
     - name: Tag Docker images
-      run: docker tag votingappacrr.azurecr.io/deploymentcentertest:latest
+      run: docker tag votingappacrr.azurecr.io/deploymentcentertest:latest votingappacrr.azurecr.io/votingappacrr.azurecr.io/deploymentcentertest:latest
         
     - name: Push Docker image 
       run: docker push votingappacrr.azurecr.io/deploymentcentertest:latest
