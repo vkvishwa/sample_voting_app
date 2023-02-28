@@ -22,7 +22,7 @@ jobs:
 
     - uses: azure/docker-login@v1
       with:
-        login-server: deploymentcenter.azurecr.io
+        login-server: votingappacrr.azurecr.io
         username: ${{ steps.create-acr.outputs.acr_username }}
         password: ${{ steps.create-acr.outputs.acr_password }}
 
