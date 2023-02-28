@@ -29,17 +29,17 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/azure-vote" -f  "azure-vote/Dockerfile" -t votingappacrr.azurecr.io/deploymentcentertest:${{ github.sha }} --label dockerfile-path=azure-vote/Dockerfile
-        docker push votingappacrr.azurecr.io/deploymentcentertest:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/azure-vote" -f  "azure-vote/Dockerfile" -t votingappacrr.azurecr.io/deploymentcentertest:latest --label dockerfile-path=azure-vote/Dockerfile
+        docker push votingappacrr.azurecr.io/deploymentcentertest:latest
         
     - name: List Docker Images
       run: docker images
       
     - name: Tag Docker images
-      run: votingappacrr.azurecr.io/deploymentcentertest
+      run: votingappacrr.azurecr.io/deploymentcentertest:latest
         
     - name: Push Docker image 
-      run: docker push votingappacrr.azurecr.io/deploymentcentertest
+      run: docker push votingappacrr.azurecr.io/deploymentcentertest:latest
     
     - uses: azure/k8s-set-context@v1
       id: login
