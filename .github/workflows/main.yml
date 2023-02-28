@@ -15,7 +15,7 @@ jobs:
     - name: Create ACR
       id: create-acr
       run: |
-        az acr create -n votingappacr -g trial-rg --location "South Central US" --sku Standard --admin-enabled
+        az acr create -n votingappacrr -g trial-rg --location "South Central US" --sku Standard --admin-enabled
         echo "::set-output name=acr_username::`az acr credential show -n deploymentcenter --query username | xargs`"
         echo "::set-output name=acr_password::`az acr credential show -n deploymentcenter --query passwords[0].value | xargs`"
         echo "::add-mask::`az acr credential show -n deploymentcenter --query passwords[0].value | xargs`"
