@@ -54,14 +54,14 @@ jobs:
     
     - name: Create namespace
       run: |
-        namespacePresent=`kubectl get namespace | grep brsanamespc | wc -l`
+        namespacePresent=`kubectl get namespace | grep voting-ns | wc -l`
         if [ $namespacePresent -eq 0 ]
         then
-            echo `kubectl create namespace brsanamespc`
+            echo `kubectl create namespace voting-ns`
         fi    
     - uses: azure/k8s-deploy@v1.2
       with:
-        namespace: brsanamespc
+        namespace: voting-ns
         manifests: backend.yaml
           
         # images: |
