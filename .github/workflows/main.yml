@@ -53,10 +53,20 @@ jobs:
         then
             echo `kubectl create namespace voting-ns`
         fi    
-    - uses: azure/k8s-deploy@v1.2
+    - uses: azure/k8s-create-secret@v1
       with:
         namespace: voting-ns
-        manifests: backend.yaml
+        container-registry-url: votingappacrr.azurecr.io
+        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
+        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
+        secret-name: votesecret
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: deploymentcentertestbe49
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
           
         # images: |
         #   deploymentcenter.azurecr.io/deploymentcentertest:${{ github.sha }}
