@@ -36,19 +36,10 @@ jobs:
       run: docker images
       
     - name: Tag Docker images
-      run: |
-        docker tag brsa-pariiii_frontend:latest deploymentcenter.azurecr.io/brsa-pariiii_frontend:latest
-        docker tag brsa-pariiii_backend:latest deploymentcenter.azurecr.io/brsa-pariiii_backend:latest
-        docker tag brsa-pariiii_mymongodb:latest deploymentcenter.azurecr.io/brsa-pariiii_mymongodb:latest
-          
+      run: votingappacrr.azurecr.io/deploymentcentertest
+        
     - name: Push Docker image 
-      run: docker push deploymentcenter.azurecr.io/brsa-pariiii_frontend:latest
-  
-    - name: Push Docker image 
-      run: docker push deploymentcenter.azurecr.io/brsa-pariiii_backend:latest
-
-    - name: Push Docker image 
-      run: docker push deploymentcenter.azurecr.io/brsa-pariiii_mymongodb:latest
+      run: docker push votingappacrr.azurecr.io/deploymentcentertest
     
     - uses: azure/k8s-set-context@v1
       id: login
