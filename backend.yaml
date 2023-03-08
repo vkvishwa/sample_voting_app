@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: node
+  name: votingapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      imagePullSecrets:
+        - name: votingapp-secret
+      containers:
+        - name: votingapp
+          image: samplevotingappacr.azurecr.io/deploymentcentertest:latest
+          ports:
+            - containerPort: 8090
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: votingapp
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8090
+  selector:
+    app: node
