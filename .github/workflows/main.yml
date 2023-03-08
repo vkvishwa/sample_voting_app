@@ -4,7 +4,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-     CLUSTER_NAME: brsa-cluster
+     CLUSTER_NAME: voting-app-aks-cluster
      CLUSTER_RESOURCE_GROUP: trial-rg
       
     steps:
