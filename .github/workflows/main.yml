@@ -2,6 +2,11 @@ on: [push]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    env:
+     CLUSTER_NAME: brsa-cluster
+     CLUSTER_RESOURCE_GROUP: trial-rg
+      
     steps:
     
     - uses: actions/checkout@master
@@ -9,22 +14,20 @@ jobs:
     - uses: pietrobolcato/install-azure-cli-action@v1
     # now run any step that would require the `az` command line utility, eg:
     
-    - name: az login
-      run: az login
-        
+    - uses: Azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      
     - name: Create ACR
       id: create-acr
       run: |
-        az acr create -n votingappacrr -g trial-rg --location "South Central US" --sku Standard --admin-enabled
-        echo "::set-output name=acr_username::`az acr credential show -n deploymentcenter --query username | xargs`"
-        echo "::set-output name=acr_password::`az acr credential show -n deploymentcenter --query passwords[0].value | xargs`"
-        echo "::add-mask::`az acr credential show -n deploymentcenter --query passwords[0].value | xargs`"
-
+        az acr create -n samplevotingappacr -g trial-rg --location "South Central US" --sku Standard --admin-enabled
+        
     - uses: azure/docker-login@v1
       with:
-        login-server: votingappacrr.azurecr.io
-        username: votingappacrr
-        password: pV3BYa+ys9xhS9q2XtoBd4ZG/Bo02QzU9lRuaPDGFC+ACRBtqkQJ
+        login-server: brsaregistry456.azurecr.io
+        username: ${{ secrets.KRSH_USERNAME }}
+        password: ${{ secrets.KRSH_PASSWORD }}
 
     - name: Build and push image to ACR
       id: build-image
@@ -53,22 +56,24 @@ jobs:
         then
             echo `kubectl create namespace voting-ns`
         fi    
-    - uses: azure/k8s-create-secret@v1
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep brsanamespace | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace brsanamespc`
+        fi
+        
+    - uses: azure/aks-set-context@v3
+      name: Get K8s context
       with:
-        namespace: voting-ns
-        container-registry-url: votingappacrr.azurecr.io
-        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
-        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
-        secret-name: votesecret
-       
-    - uses: azure/k8s-deploy@v1.2
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        
+    - name: Set up Kubernetes environment
+      uses: Azure/setup-kubectl@v1
       with:
-        namespace: deploymentcentertestbe49
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-          
-        # images: |
-        #   deploymentcenter.azurecr.io/deploymentcentertest:${{ github.sha }}
-        #imagepullsecrets: |
-          #brsasecret   
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+        
+    - name: Deploy to AKS
+      run: kubectl apply -f ./backend.yaml
